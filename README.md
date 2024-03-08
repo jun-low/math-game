@@ -1,6 +1,22 @@
 # MathGame
 
+A fun and interactive math addition game built with Angular 17, TypeScript, RxJS, and Angular Material.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
+
+## Features
+- Randomly generates math addition equations with two single numbers between 0 and 9.
+- Allows the user to input their answer and provides immediate feedback (correct or incorrect).
+- Displays the number of correct answers and total questions attempted.
+- Calculates and displays the average time taken per solution.
+- Provides a "Reset Game" button to start a new game.
+
+## Getting Started
+
+## Prerequisites
+
+- Node.js and npm (Node Package Manager) installed on your machine.
+- Angular CLI (Command Line Interface) installed globally (`npm install -g @angular/cli`).
 
 ## Development server
 
