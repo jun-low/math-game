@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MathGameComponent } from './components/math-game/math-game.component';
-
 @Component({
   selector: 'app-root',
   standalone: true,

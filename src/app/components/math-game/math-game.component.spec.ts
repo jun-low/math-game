@@ -2,6 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MathGameComponent } from './math-game.component';
 import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MathGameComponent', () => {
   let component: MathGameComponent;
@@ -9,7 +14,7 @@ describe('MathGameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MathGameComponent]
+      imports: [MathGameComponent, FormsModule, MatInputModule, MatButtonModule, MatIconModule, BrowserAnimationsModule]
     })
     .compileComponents();
     
