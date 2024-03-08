@@ -1,0 +1,64 @@
+:host {
+  --bright-green: oklch(51.01% 0.274 123.83);
+  --orange-red: oklch(63.32% 0.24 31.68);
+}
+
+.game-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+
+  .equation {
+    font-size: 24px;
+    margin-bottom: 20px;
+
+    .number {
+      font-weight: bold;
+    }
+
+    .operator, .equal {
+      margin: 0 10px;
+    }
+  }
+
+  .answer-feedback {
+    margin-bottom: 20px;
+
+    .answer-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      width: 50%;
+      margin: 0 auto;
+      border-radius: 12px;
+      border: 0;
+      transition: background 0.3s ease;
+
+      mat-icon {
+        margin-right: 10px;
+      }
+    }
+
+    .correct-answer {
+      @extend .answer-box;
+      background: color-mix(in srgb, var(--bright-green) 5%, transparent);
+      color: var(--bright-green);
+    }
+
+    .wrong-answer {
+      @extend .answer-box;
+      background: color-mix(in srgb, var(--orange-red) 5%, transparent);
+      color: var(--orange-red);
+    }
+  }
+
+  .stats {
+    margin-bottom: 20px;
+  }
+
+  .actions {
+    text-align: center;
+  }
+}

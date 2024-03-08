@@ -1,0 +1,28 @@
+<div class="game-container">
+  <div class="equation">
+    <span class="number">{{ firstNumber }}</span>
+    <span class="operator">+</span>
+    <span class="number">{{ secondNumber }}</span>
+    <span class="equal">=</span>
+    <mat-form-field>
+      <input matInput type="number" [(ngModel)]="userAnswer" (keyup.enter)="checkAnswer()">
+    </mat-form-field>
+  </div>
+  <div class="answer-feedback" *ngIf="isCorrect !== null">
+    <div class="correct-answer" *ngIf="isCorrect">
+      <mat-icon>check_circle</mat-icon>
+      <span>Correct 🎉</span>
+    </div>
+    <div class="wrong-answer" *ngIf="!isCorrect">
+      <mat-icon>cancel</mat-icon>
+      <span>Oops, try again 😅</span>
+    </div>
+  </div>
+  <div class="stats">
+    <p>Correct answers: {{ correctAnswers }} / {{ totalQuestions }}</p>
+    <p>Average time: {{ totalTime / totalQuestions / 1000 | number:'1.2-2' }} seconds</p>
+  </div>
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="resetGame()">Reset Game</button>
+  </div>
+</div>
