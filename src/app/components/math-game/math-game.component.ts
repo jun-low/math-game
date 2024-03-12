@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { interval, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-math-game',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule],
   templateUrl: './math-game.component.html',
   styleUrls: ['./math-game.component.scss']
 })
@@ -23,10 +22,16 @@ export class MathGameComponent implements OnInit {
   correctAnswers = 0;
   startTime: number = 0;
   endTime: number = 0;
-  totalTime: number = 0;
+  averageTime: number = 0;
   subscription?: Subscription;
+  form: FormControl;
 
-  constructor() {}
+  constructor() {
+    this.form = new FormControl('', [
+      Validators.pattern("^[0-9]*$"),
+      Validators.maxLength(2),
+    ]);
+  }
 
   ngOnInit(): void {
     this.generateNewEquation();
@@ -37,33 +42,34 @@ export class MathGameComponent implements OnInit {
     this.secondNumber = Math.floor(Math.random() * 10);
     this.userAnswer = null;
     this.isCorrect = null;
+    this.form.reset();
+    this.form.markAsPristine();
+    this.startTime = performance.now();
   }
 
   checkAnswer(): void {
-      const correctAnswer = this.firstNumber + this.secondNumber;
-      this.isCorrect = this.userAnswer === correctAnswer;
-      if (this.isCorrect) {
-        this.correctAnswers++;
-        // Delay the new equation generation to give the user a chance to see the correct answer
-        setTimeout(() => {
-          this.generateNewEquation();
-        }, 500);
-      }
-      this.totalQuestions++;
+    const correctAnswer = this.firstNumber + this.secondNumber;
+    this.userAnswer = parseInt(this.form.value, 10);
+    this.isCorrect = this.userAnswer === correctAnswer;
+    const endTime = performance.now();
+    const questionTime = (endTime - this.startTime) / 1000;
+    this.averageTime = this.totalQuestions > 0 ? (this.totalQuestions * this.averageTime + questionTime) / this.totalQuestions : questionTime;
+
+    if (this.isCorrect) {
+      this.correctAnswers++;
+      // Delay the new equation generation to give the user a chance to see the correct answer
+      setTimeout(() => {
+        this.generateNewEquation();
+      }, 500);
+    }
+    this.totalQuestions++;
   }
 
   resetGame(): void {
     this.totalQuestions = 0;
     this.correctAnswers = 0;
-    this.totalTime = 0;
-    this.startTime = performance.now();
+    this.averageTime = 0;
     this.generateNewEquation();
-    this.subscription = interval(1000)
-      .pipe(take(Infinity))
-      .subscribe(() => {
-        this.endTime = performance.now();
-        this.totalTime = this.endTime - this.startTime;
-      });
   }
 
   ngOnDestroy(): void {

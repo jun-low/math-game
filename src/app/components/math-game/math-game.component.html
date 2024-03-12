@@ -4,9 +4,17 @@
     <span class="operator">+</span>
     <span class="number">{{ secondNumber }}</span>
     <span class="equal">=</span>
-    <mat-form-field>
-      <input matInput type="number" [(ngModel)]="userAnswer" (keyup.enter)="checkAnswer()">
-    </mat-form-field>
+    <form (ngSubmit)="checkAnswer()">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="form" />
+        <mat-error *ngIf="form.invalid">
+          <span *ngIf="form.errors?.['maxlength']">
+            Number must not be more than 2 characters long.
+          </span>
+          <span *ngIf="form.errors?.['pattern']">Only numbers are allowed.</span>
+        </mat-error>
+      </mat-form-field>
+    </form>
   </div>
   <div class="answer-feedback" *ngIf="isCorrect !== null">
     <div class="correct-answer" *ngIf="isCorrect">
@@ -20,9 +28,11 @@
   </div>
   <div class="stats">
     <p>Correct answers: {{ correctAnswers }} / {{ totalQuestions }}</p>
-    <p>Average time: {{ totalTime / totalQuestions / 1000 | number:'1.2-2' }} seconds</p>
+    <p>Average time: {{ averageTime | number: "1.0-0" }} seconds</p>
   </div>
   <div class="actions">
-    <button mat-raised-button color="primary" (click)="resetGame()">Reset Game</button>
+    <button mat-raised-button color="primary" (click)="resetGame()">
+      Reset Game
+    </button>
   </div>
 </div>

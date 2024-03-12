@@ -12,6 +12,9 @@
   .equation {
     font-size: 24px;
     margin-bottom: 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
 
     .number {
       font-weight: bold;
